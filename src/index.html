@@ -9,7 +9,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Map Game</title>
         <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, interactive-widget=resizes-content">
         <link rel="stylesheet" href="main.css">
     </head>
     <body>
@@ -21,7 +21,6 @@
             <div class="map">
                 <!-- width="959" height="593" viewBox="-50 -100 1000 1000" -->
                 <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" viewBox="0 -30 950 700" style="width: 100%; height: 100%;">
-                    <title>Blank map of the United States, territories not included</title>
                   <defs>
                   <style type="text/css">
                   .state {fill:#D0D0D0}                        /* default color for all states not specified below */
@@ -316,17 +315,19 @@
                   
                   </svg>
             </div>
-            <div class="state-output" id="state-output">
-                <h1 id="guess">Guess the capital</h1>
-                <p id="notQuite" style="visibility: hidden">Not quite, try again.</p>
-            </div>
-            <div class="score-box">
-                <p id="score">Score: 0</p>
-            </div>
-            <div class="player-input">
+            <div class="player-input" id="input-box">
                 <input id="playerInput" placeholder="Guess a capital">
                 <input type="submit" id="submit">
             </div>
+            <div class="state-output" id="state-output">
+                <h1 id="guess">Guess the capital</h1>
+                <p id="notQuite">Not quite, try again.</p>
+            </div>
+            <div class="score-box">
+                    <p id="score">Score: 0</p>
+                    <p id="attempts">Attempts: 3</p>
+            </div>
+
             <div class="reset">
                 <button id="reset">Reset</button>
             </div>
