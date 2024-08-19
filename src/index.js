@@ -1,10 +1,12 @@
 let states;
-const alreadyGuessed = new Map();
+let alreadyGuessed = new Map();
 let score = 0;
 let submit = document.getElementById('submit');
 let playerInput = document.getElementById('playerInput');
+let notQuite = document.getElementById('notQuite');
 let stateNumber = 0;
 let reset = document.getElementById('reset');
+let attempts = 3;
 
 submit.addEventListener('click', function() {
   if(score != 51) {
@@ -19,14 +21,22 @@ playerInput.addEventListener('keypress', function(event) {
   }
 })
 
+const handleResize = () => {
+  document.getElementById('header').style.top = window.visualViewport.offsetTop.toString() + 'px'
+}
+
+if (window && window.visualViewport) visualViewport.addEventListener('resize', handleResize)
+
+
+
 reset.addEventListener('click', function() {
-  location.reload();
+  resetMap();
 })
 
 
 
 // Get states from server
-const res = await fetch('http://localhost:8080/getStates');
+const res = await fetch('https://api.cohagancreates.com:8080/getStates');
 states = await res.json();
 
 // Random state number
@@ -67,17 +77,50 @@ function isInMap() {
 
 // See if player is correct or not
 function checkCorrect() {
-  document.getElementById('notQuite').style="visibility: hidden";
+  notQuite.style.display="none";
   let guess = playerInput.value;
-  if(guess == states[stateNumber][2]) {
+  if(guess.toUpperCase().trim() == states[stateNumber][2].toUpperCase().trim()) {
     playerInput.value = '';
     document.getElementById('score').innerHTML = ('Score: ' + score);
     isInMap();
   }
-  else{
+  else if (guess !== '' && guess.toUpperCase().trim() !== states[stateNumber][2].toUpperCase().trim() && attempts > 1) {
     playerInput.value = '';
-    document.getElementById('notQuite').style="visibility: visible";
+    notQuite.style.display="block";
+    attempts--;
+    document.getElementById('attempts').innerHTML = ('Attempts: ' + attempts);
   }
+  else if (guess === '') {
+    playerInput.value = '';
+    notQuite.style.display="block";
+    notQuite.innerHTML = ('Input cannot be blank.');
+  }
+  else{
+    attempts--;
+    document.getElementById('attempts').innerHTML = ('Attempts: ' + attempts);
+    playerInput.value = '';
+    submit.style.display = 'none';
+    playerInput.style.display = 'none';
+    document.getElementById('guess').innerHTML  = ('You lose, better luck next time!');
+    notQuite.style.display="block";
+    notQuite.innerHTML = ('The capital of ' + states[stateNumber][0] + ' is ' + states[stateNumber][2]);
+  }
+}
+
+function resetMap() {
+  for(let i = 0; i < states.length; i ++) {
+    document.getElementById(states[i][1]).style.fill='#D0D0D0';
+  }
+  alreadyGuessed = new Map();
+  score = 0;
+  attempts = 3;
+  document.getElementById('attempts').innerHTML = ('Attempts: ' + attempts);
+  submit.style.display = 'block';
+  playerInput.style.display = 'block';
+  notQuite.style.display="none";
+  notQuite.innerHTML = ('Not quite, try again.');
+
+  isInMap();
 }
 
 // Run the program

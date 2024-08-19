@@ -1,12 +1,8 @@
 body {
     font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
-
-.page {
-    width: 95vw;
-    height: 80vh;
+    overflow: scroll;
+    height: 100svh;
+    width: 100svw;
 }
 
 .header-box {
@@ -18,7 +14,6 @@ body {
 }
 
 h1 {
-    font-size: (2rem + 1vw);
     overflow-wrap: break-word;
     text-align: center;
 }
@@ -27,7 +22,11 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50%;
+}
+
+svg {
+    max-width: 1000px;
+    max-height: 1000px;
 }
 
 svg path {
@@ -39,10 +38,6 @@ svg path {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* height: 25%; */
-    height: 60%;
-    width: 100%;
-    margin-top: 2%;
 }
 
 .state-output {
@@ -51,13 +46,20 @@ svg path {
     align-items: center;
     justify-content: center;
     margin-top: 2%;
-    gap: 10px;
+}
+
+#notQuite {
+    display: none;
 }
 
 .score-box {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.score-box p {
+    padding: 10px;
 }
 
 .player-input {
@@ -71,4 +73,10 @@ svg path {
     align-items: center;
     justify-content: center;
     padding: 1%;
+}
+
+@media(max-width: 700px) {
+    h1 {
+        font-size: 1em;
+    }
 }
